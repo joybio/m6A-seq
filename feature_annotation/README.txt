@@ -15,7 +15,9 @@ USAGE:
 
 Running Annotation v1.0
 
-Annotation.py -b "bed" -g "gtf"
+feature_annotation.py -b "bed" -g "gtf" -o "output1" -d "output2"
+output1: feature
+output2: distribution
 
 bed format:
 1       5561    5840
@@ -29,3 +31,18 @@ bed format:
 1       89545   89763
 1       90312   90578
 
+#before genetype.py
+awk '$3~/gene/' Arabidopsis_thaliana.TAIR10.53.gtf > Arabidopsis_thaliana.TAIR10.53.gene.gtf
+awk '{print $10"\t"$NF}' Arabidopsis_thaliana.TAIR10.53.gene.gtf > annotate_rnatype.gtf
+sed -i 's/"//g' annotate_rnatype.gtf
+sed -i 's/;//g' annotate_rnatype.gtf
+#
+awk '{print $1"\t"$4"\t"$5"\t"$7"\t"$10}' Arabidopsis_thaliana.TAIR10.53.gene.gtf | sort | uniq > Arabidopsis_thaliana.TAIR10.53.gtf.bed
+sed -i 's/"//g' Arabidopsis_thaliana.TAIR10.53.gtf.bed
+sed -i 's/;//g' Arabidopsis_thaliana.TAIR10.53.gtf.bed
+
+#
+intersectBed -a Rep_conc.macs2_peaks.narrowPeak.bed -b Arabidopsis_thaliana.TAIR10.53.gtf.bed -wo > Rep_conc.macs2_peaks.narrowPeak.gene.bed
+genetype.py -b Rep_conc.macs2_peaks.narrowPeak.gene.bed -g annotate_rnatype.gtf -o Rep_conc.macs2_peaks.narrowPeak.gene.type
+awk '{print $1"\t"$2"\t"$3"\t"$NF}' Rep_conc.macs2_peaks.narrowPeak.gene.type | sort | uniq > uniq.Rep_conc.macs2_peaks.narrowPeak.gene.type
+awk '{a[$4]++}END{for(i in a)print i"\t"a[i]}' uniq.Rep_conc.macs2_peaks.narrowPeak.gene.type > uniq.Rep_conc.macs2_peaks.narrowPeak.gene.type.xls
