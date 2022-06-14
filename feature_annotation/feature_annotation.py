@@ -11,7 +11,6 @@ __license__ = "PKU.jia.group"
 import re
 import os
 import optparse
-import bisect
 #sort  package
 from optparse import OptionParser
 
@@ -69,7 +68,7 @@ os.system("intersectBed -a %s -b row_feature_annotate.gtf.bed -wo > temp_step1_f
 
 data = open('temp_step1_feature_annotate.gtf.bed','r')
 out = open('temp_step2_feature_annotate.gtf.bed','w')
-#We divided transcripts into five segments: 5'UTRs, start codons (200-nucleotide window centered on the start codon), coding sequences (CDSs), stop codons (200-nucleotide window centered on the stop codon), and 3'UTRs.
+#We divided transcripts into five segments: 5'UTRs, start codons (100-nucleotide window centered on the start codon), coding sequences (CDSs), stop codons (100-nucleotide window centered on the stop codon), and 3'UTRs.
 for i in data:
 	TYPE = i
 	i = i.strip().split("\t")
