@@ -10,6 +10,9 @@ nohup sh macs2.sh 2>&1 > macs.log &
 #step3: identify differential methylated peaks. you can repace R package exomepeak with MeTDiff (another R package).
 
 nohup Rscript exomepeak.r 2>&1 > exomepeak.log &
-#step4: feature_annotation: locate m6A peaks among genome. We separate genome inf six non-overlapping region: Intergenic, 5'UTR. Start_codon (100-nt center start codon), CDS, 3'UTR, Stop codon (100-nt center stop codon).
+
+#step4: feature_annotation: locate m6A peaks among genome. We separate genome inf six non-overlapping segments: Intergenic, 5'UTRs, start codons (100-nucleotide window centered on the start codon), coding sequences (CDSs), stop codons (100-nucleotide window centered on the stop codon), and 3'UTRs.
+
+feature_annotation.py --help
 
 
