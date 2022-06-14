@@ -42,7 +42,7 @@ sed -i 's/"//g' Arabidopsis_thaliana.TAIR10.53.gtf.bed
 sed -i 's/;//g' Arabidopsis_thaliana.TAIR10.53.gtf.bed
 
 #
-intersectBed -a Rep_conc.macs2_peaks.narrowPeak.bed -b Arabidopsis_thaliana.TAIR10.53.gtf.bed -wo > Rep_conc.macs2_peaks.narrowPeak.gene.bed
-genetype.py -b Rep_conc.macs2_peaks.narrowPeak.gene.bed -g annotate_rnatype.gtf -o Rep_conc.macs2_peaks.narrowPeak.gene.type
-awk '{print $1"\t"$2"\t"$3"\t"$NF}' Rep_conc.macs2_peaks.narrowPeak.gene.type | sort | uniq > uniq.Rep_conc.macs2_peaks.narrowPeak.gene.type
-awk '{a[$4]++}END{for(i in a)print i"\t"a[i]}' uniq.Rep_conc.macs2_peaks.narrowPeak.gene.type > uniq.Rep_conc.macs2_peaks.narrowPeak.gene.type.xls
+intersectBed -a [].narrowPeak.bed -b Arabidopsis_thaliana.TAIR10.53.gtf.bed -wo > [].narrowPeak.gene.bed
+genetype.py -b [].narrowPeak.gene.bed -g annotate_rnatype.gtf -o [].gene.type
+awk '{print $1"\t"$2"\t"$3"\t"$NF}' [].narrowPeak.gene.type | sort | uniq > uniq.[].narrowPeak.gene.type
+awk '{a[$4]++}END{for(i in a)print i"\t"a[i]}' uniq.[].narrowPeak.gene.type > uniq.[].narrowPeak.gene.type.xls
