@@ -31,11 +31,16 @@ bed format:
 1       89545   89763
 1       90312   90578
 
+
 #before genetype.py
+options1：
 awk '$3~/gene/' Arabidopsis_thaliana.TAIR10.53.gtf > Arabidopsis_thaliana.TAIR10.53.gene.gtf
 awk '{print $10"\t"$NF}' Arabidopsis_thaliana.TAIR10.53.gene.gtf > annotate_rnatype.gtf
 sed -i 's/"//g' annotate_rnatype.gtf
 sed -i 's/;//g' annotate_rnatype.gtf
+options2：
+python annotate_build.py -i [gtf] -o annotate_rnatype.gtf -f gene
+
 #
 awk '{print $1"\t"$4"\t"$5"\t"$7"\t"$10}' Arabidopsis_thaliana.TAIR10.53.gene.gtf | sort | uniq > Arabidopsis_thaliana.TAIR10.53.gtf.bed
 sed -i 's/"//g' Arabidopsis_thaliana.TAIR10.53.gtf.bed
